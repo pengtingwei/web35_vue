@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 如果我们在调用函数时需要传递参数 那么在事件绑定的时候 需要给函数名加上()\
+    
+        要传递事件对象 事件对象 $event 并且要写在参数列表的最后面 
+    -->
+        <button @click="addNum1(10,20,$event)">确定</button>
+        <button @click="addNum">确定</button>
+
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                num: 1
+            },
+            methods: {
+                // 这里面放我们定义的函数
+                addNum1(v1, v2, e) {
+                    console.log(v1, v2, e.target.innerHTML);
+
+                },
+                addNum(e){
+                    console.log(e)
+                }
+            },
+        });
+
+    </script>
+
+</body>
+
+</html>

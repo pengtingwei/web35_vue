@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        var obj = {};
+
+        /*
+            第三个参数里面还有两个方法 
+            set 如果我们手动给这个对象添加指定的属性 这个方法就会被调用 
+            get 如果我们手动给这个对象访问指定的属性 这个方法就会被调用 
+        */
+
+
+        Object.defineProperty(obj,'name',{
+            // 只要是给obj这个对象添加name属性 这个set方法 就会被调用 
+            set:function(){
+                console.log("obj中的name属性被设置了");
+            },
+            get:function(){
+                console.log("obj中的name属性被访问");
+            }
+        });
+
+        // 给obj这个对象添加一个属性叫name 
+
+        obj.name = "张三";
+
+        console.log(obj.name);
+    
+    
+    
+    </script>
+</body>
+</html>
