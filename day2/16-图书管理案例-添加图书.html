@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
@@ -10,20 +10,25 @@
       width: 530px;
       text-align: center;
     }
+
     .grid table {
       border-top: 1px solid #C2D89A;
       width: 100%;
       border-collapse: collapse;
     }
-    .grid th,td {
+
+    .grid th,
+    td {
       padding: 10;
       border: 1px dashed #F3DCAB;
       height: 35px;
       line-height: 35px;
     }
+
     .grid th {
       background-color: #F3DCAB;
     }
+
     .grid .book {
       padding-bottom: 10px;
       padding-top: 5px;
@@ -31,6 +36,7 @@
     }
   </style>
 </head>
+
 <body>
   <div id="app">
     <div class="grid">
@@ -41,12 +47,12 @@
             <label for="id">
               编号：
             </label>
-            <input type="text" id="id" v-model='id'>
+            <input type="text" id="id" v-model='id' :disabled="disabled">
             <label for="name">
               名称：
             </label>
             <input type="text" id="name" v-model='name'>
-            <button @click='handle'>提交</button>
+            <button @click='add'>提交</button>
           </div>
         </div>
       </div>
@@ -60,14 +66,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr :key='item.id' v-for='item in books'>
+          <tr :key='item.id' v-for='(item,index) in books'>
             <td>{{item.id}}</td>
             <td>{{item.name}}</td>
             <td>{{item.date}}</td>
             <td>
-              <a href="" @click.prevent>修改</a>
+              <a href="" @click.prevent="editBook(index)">修改</a>
               <span>|</span>
-              <a href="" @click.prevent>删除</a>
+              <a href="" @click.prevent="delBook(index)">删除</a>
             </td>
           </tr>
         </tbody>
@@ -84,38 +90,60 @@
       data: {
         id: '',
         name: '',
+        disabled: false,
         books: [{
           id: 1,
           name: '三国演义',
-          date: ''
-        },{
+          date: new Date().getTime()
+        }, {
           id: 2,
           name: '水浒传',
-          date: ''
-        },{
+          date: new Date().getTime()
+        }, {
           id: 3,
           name: '红楼梦',
-          date: ''
-        },{
+          date: new Date().getTime()
+        }, {
           id: 4,
           name: '西游记',
-          date: ''
+          date: new Date().getTime()
         }]
       },
       methods: {
-        handle: function(){
-          // 添加图书
-          var book = {};
-          book.id = this.id;
-          book.name = this.name;
-          book.date = '';
-          this.books.push(book);
-          // 清空表单
-          this.id = '';
-          this.name = '';
+        add() {
+          // 如果this.disabled这个属性的值为true表示的是修改 如果这个值为false就表示是添加功能 
+          if (this.disabled) {
+            // 修改功能 name的值 在我们的数组中有N个元素 每一个元素是一个对象 那我们如何知道修改数组中的哪一个元素呢？
+            // some() 
+            // this.books.some((item) => {
+            //   if (item.id == this.id) {
+            //     // 对item.name 进行修改
+            //     item.name = this.name;
+            //     return true;
+            //   }
+            // })
+            var index = this.books.findIndex((item) => item.id == this.id);
+            this.books[index].name = this.name;
+            this.disabled = false;
+            this.id = this.name = '';
+
+          } else {
+            // 添加功能
+            this.books.push({ id: this.id, name: this.name, date: new Date().getTime() });
+            this.id = this.name = '';
+          }
+        },
+        editBook(key) {
+          this.id = this.books[key].id;
+          this.name = this.books[key].name;
+          this.disabled = true;
+        },
+        delBook(key) {
+          this.books.splice(key, 1);
         }
       }
     });
   </script>
 </body>
+
 </html>

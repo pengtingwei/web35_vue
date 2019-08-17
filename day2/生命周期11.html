@@ -7,7 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <p>{{msg}}</p>
+        <button @click="msg=1">确定</button>
+    </div>
     <script src="js/vue.js"></script>
     <script>
         var vm = new Vue({
@@ -21,12 +24,29 @@
                 }
             },
             beforeCreate() {
+                // 、在 beforeCreate 生命周期函数执行的时候，data 和 methods 中的 数据都还没有没初始化
                 // console.log(this.msg);
                 // this.show();
             },
             created() {
-                console.log(this.msg);
-                this.show();
+                // 如果要调用 methods 中的方法，或者操作 data 中的数据，最早，只能在 created 中操作
+                // console.log(this.msg);
+                // this.show();
+            },
+            beforeMount(){
+                //表示 模板已经在内存中编辑完成了，但是尚未把 模板渲染到 页面中
+                // console.log(document.querySelector('p').innerHTML);
+            },
+            mounted(){
+                // 表示，内存中的模板，已经真实的挂载到了页面中，用户已经可以看到渲染好的页面了
+                //console.log("mounted生命周期"+document.querySelector('p').innerHTML);
+            },
+            beforeUpdate() {
+                //表示 我们的界面还没有被更新【数据被更新了吗？  数据肯定被更新了】
+                console.log(document.querySelector('p').innerHTML);
+            },
+            updated() {
+                // updated 事件执行的时候，页面和 data 数据已经保持同步了，都是最新的
             },
         });
     
