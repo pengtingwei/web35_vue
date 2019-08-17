@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 
+            当我们打开这个页面时就给下面的input标签设置自动获取焦点
+            在原生js中有一个方法叫focus() 
+
+            指令是v-开头  vue 13个系统的指令  
+        
+        -->
+        <input type="text" v-focus>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.directive('focus', {
+            // 当被绑定的元素插入到 DOM 中时……
+            // bind: function (el) {
+            //     // 聚焦元素
+            //     el.style.backgroundColor = "#daa520";
+            // }
+            inserted: function (el) {
+                el.focus();
+            }
+        })
+
+
+        // 创建vue实例
+        const vm = new Vue({
+            el: '#app',
+            data: {
+
+            }
+        });
+
+
+
+    </script>
+</body>
+
+</html>

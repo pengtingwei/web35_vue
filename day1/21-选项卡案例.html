@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Document</title>
   <style type="text/css">
-    
     .tab ul {
       overflow: hidden;
       padding: 0;
       margin: 0;
     }
+
     .tab ul li {
       box-sizing: border-box;
       padding: 0;
@@ -21,14 +22,18 @@
       text-align: center;
       border-top: 1px solid blue;
       border-right: 1px solid blue;
-      cursor
+      cursor: pointer;
     }
+
     .tab ul li:first-child {
       border-left: 1px solid blue;
     }
+
     .tab ul li.active {
       background-color: orange;
+      color: #fff;
     }
+
     .tab div {
       width: 500px;
       height: 300px;
@@ -39,53 +44,71 @@
       border: 1px solid blue;
       border-top: 0px;
     }
+
     .tab div.current {
       display: block;
     }
   </style>
 </head>
+
 <body>
   <div id="app">
     <div class="tab">
+      <!--  tab栏  -->
       <ul>
-        <li v-on:click='change(index)' :class='currentIndex==index?"active":""' :key='item.id' v-for='(item,index) in list'>{{item.title}}</li>
+        <!-- item表示数组里面的元素 元素是一个对象 对象.属性 
+          判断currentIndex的值 与index的值是否相等 如果相等 就设置一个active 如果不相等就给一个空字符串 
+          事件绑定  v-on  @事件名
+          属性绑定  v-bind  :属性名
+        -->
+        <li :class="currentIndex == index ? 'active' : ''" v-for="(item,index) in list" v-text="item.title"
+          :key="item.id" @click="toggle(index)">
+        </li>
       </ul>
-      <div :class='currentIndex==index?"current":""' :key='item.id' v-for='(item, index) in list'>
-        <img :src="item.path">
-      </div>
+      <!--  对应显示的图片 -->
+      <div :class="currentIndex == index ? 'current' : ''" v-for="(item,index) in list" :key="item.id"><img
+          :src="item.path"></div>
     </div>
   </div>
-  <script type="text/javascript" src="js/vue.js"></script>
-  <script type="text/javascript">
-    /*
-      
-    */
-    var vm = new Vue({
+  <script src="js/vue.js"></script>
+  <script>
+
+    const vm = new Vue({
       el: '#app',
       data: {
-        currentIndex: 0, // 选项卡当前的索引
+        // 控制li与div的显示
+        currentIndex: 0,
         list: [{
           id: 1,
           title: 'apple',
           path: 'img/apple.png'
-        },{
+        }, {
           id: 2,
           title: 'orange',
           path: 'img/orange.png'
-        },{
+        }, {
           id: 3,
           title: 'lemon',
           path: 'img/lemon.png'
         }]
       },
       methods: {
-        change: function(index){
-          // 在这里实现选项卡切换操作：本质就是操作类名
-          // 如何操作类名？就是通过currentIndex
-          this.currentIndex = index;
+        /*
+         toggle:function(){}
+         当鼠标点击li时 获取当前被点击的这个索引值 
+        */
+        toggle(key) {
+          // 将当前被点击的这个li身上的索引值 赋值给currentIndex这个属性 
+          this.currentIndex = key;
         }
-      }
+      },
+
     });
+
+
+
+
   </script>
 </body>
+
 </html>

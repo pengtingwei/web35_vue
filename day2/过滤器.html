@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{nDate | formatDate}}</div>
+        <div>{{gt()}}</div>
+        <button @click="gt">开始</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        // 定义一个全局的过滤器  格式化文本 函数形参的默认值 
+        Vue.filter('formatDate', function (value, fd = "yyyy-MM-dd") {
+            var n = new Date(value);
+            var y = n.getFullYear();
+            var m = (n.getMonth() + 1).toString().padStart(2, 0);
+            var d = n.getDate().toString().padStart(2, 0);
+            var h = n.getHours().toString().padStart(2, 0);
+            var f = n.getMinutes().toString().padStart(2, 0);
+            var s = n.getSeconds().toString().padStart(2, 0);
+            if (fd == "yyyy-MM-dd") {
+                return `${y}-${m}-${d}`;
+            } else if (fd == "yyyy-MM-dd HH:ii:ss") {
+                return `${y}-${m}-${d} ${h}:${f}:${s}`;
+            }
+        })
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                nDate: new Date(),
+                msg: 'abcd'
+            },
+            methods: {
+                gt: function () {
+                    var i = 1;
+                    setInterval(function () {
+                        i++;
+                        return i;
+                    }, 1000)
+
+                }
+            },
+        });
+
+    </script>
+</body>
+
+</html>

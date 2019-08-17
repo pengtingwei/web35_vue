@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <div>{{msg}}</div>
+    <button @click="reString">翻转字符串</button>
+  </div>
+  <script type="text/javascript" src="js/vue.js"></script>
+  <script type="text/javascript">
+    /*
+      计算属性
+    */
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'Nihao'
+      },
+      // 计算属性
+      computed: {
+        reverseString: function(){
+          return this.msg.split('').reverse().join('');
+        }
+      },
+      methods: {
+        reString(){
+            console.log(this.msg.split('').reverse().join(''));  
+        }
+      },
+      watch: {
+          
+      },
+
+    });
+  </script>
+</body>
+</html>
